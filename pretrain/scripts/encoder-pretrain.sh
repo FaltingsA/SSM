@@ -1,0 +1,12 @@
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=8 --nnodes=1 --master_port 29060 sim_pretrain.py  \
+--lr 5e-4 \
+--batch_size 144 \
+--mode single \
+--model flipae_sim_vit_small_str \
+--epochs 20 \
+--warmup_epochs 1  \
+--mm 0.995 \
+--mmschedule 'cosine' \
+--output_dir $output_path$ \
+--data_path $data_path$ \
+--direction aug_pool --num_workers 10 

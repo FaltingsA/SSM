@@ -1,0 +1,14 @@
+CUDA_VISIBLE_DEVICES=0 python3 -m torch.distributed.launch --nproc_per_node=1 --nnodes=1 --master_port 29060 main_pixel.py  \
+--lr 1e-4 \
+--batch_size 96 \
+--mode single \
+--model pixel_vit_small \
+--epochs 100 \
+--warmup_epochs 5  \
+--pixel_type SR \
+--output_dir /home/gaoz/output_pixel/SR-dd/ \
+--best_dir /home/gaoz/output_pixel/SR-dd/best/ \
+--data_path /home/gaoz/datasets/textzoom/train/ \
+--eval_data_path /home/gaoz/datasets/textzoom/test/ \
+--pretrained /home/gaoz/output/dig-cc/checkpoint-9.pth \
+--num_workers 10 --train_val

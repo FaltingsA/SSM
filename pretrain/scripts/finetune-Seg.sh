@@ -1,0 +1,14 @@
+CUDA_VISIBLE_DEVICES=0 python3 -m torch.distributed.launch --nproc_per_node=1 --nnodes=1 --master_port 29062 main_pixel.py  \
+--lr 1e-4 \
+--batch_size 96 \
+--mode single \
+--model pixel_vit_small \
+--epochs 100 \
+--warmup_epochs 10  \
+--pixel_type Seg \
+--output_dir /home/gaoz/output_pixel/Seg-100e-abiaug/ \
+--best_dir /home/gaoz/output_pixel/Seg-100e-abiaug/best/ \
+--data_path /home/gaoz/datasets/TextSeg/TextSeg/image_slice/train_all/ \
+--eval_data_path /home/gaoz/datasets/TextSeg/TextSeg/image_slice/test/ \
+--pretrained /home/gaoz/output/mdr-pool-small-OCRCC/checkpoint-19.pth \
+--num_workers 10 --train_val
