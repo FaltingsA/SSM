@@ -107,4 +107,16 @@ PARSeq runtime parameters can be passed using the format `param:type=value`. For
 ./test.py outputs/<model>/<timestamp>/checkpoints/last.ckpt --new
 ```
 
+## ✍️ Citation
+
+```bibtex
+@misc{gao2024selfsupervised,
+      title={Self-Supervised Pre-training with Symmetric Superimposition Modeling for Scene Text Recognition}, 
+      author={Zuan Gao and Yuxin Wang and Yadong Qu and Boqiang Zhang and Zixiao Wang and Jianjun Xu and Hongtao Xie},
+      year={2024},
+      eprint={2405.05841},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
 
