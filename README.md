@@ -11,13 +11,13 @@ Download the [datasets](Datasets.md) from the following links:
 3. [Union14M archives](https://github.com/Mountchicken/Union14M/blob/main/docs/source_dataset.md)for Union14M
 
 ## Pretraining
-1. put the data under in  $data_path$ and 建立 $output_path$
-2. run the scripts:
+1. Place your data in data_path and create output_path directory
+2. Execute the following script:
 ```sh
 cd pretrain
 bash scripts/encoder-pretrain.sh
 ```
-The shell scripts is like:
+The shell script contains the following configuration:
 ```sh
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=8 --nnodes=1 --master_port 29060 sim_pretrain.py  \
 --lr 5e-4 \
