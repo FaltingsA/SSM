@@ -2,8 +2,7 @@
 [IJCAI-2024] The official code of  Self-Supervised Pre-training with Symmetric Superimposition Modeling for Scene Text Recognition
 
 ## Model weights
-### pretrained vit weights
-### finetuned model weights
+[Google Cloud](https://drive.google.com/drive/folders/1_tGsCcUNiWf_hgE43dzOy2yM5nYW7UUu?usp=drive_link)
 
 ## Datasets
 Download the [datasets](Datasets.md) from the following links:
