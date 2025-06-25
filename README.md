@@ -81,8 +81,6 @@ you just need to prefix it with `+` if it is not originally specified in `config
 ./train.py +experiment=<model_exp> ckpt_path=outputs/<model>/<timestamp>/checkpoints/<checkpoint>.ckpt
 ```
 
-</p></details>
-
 ## Evaluation
 The test script, ```test.py```, can be used to evaluate any model trained with this project. For more info, see ```./test.py --help```.
 
@@ -92,8 +90,6 @@ PARSeq runtime parameters can be passed using the format `param:type=value`. For
 ```bash
 ./test.py outputs/<model>/<timestamp>/checkpoints/last.ckpt  
 ```
-
-<details><summary>Sample commands for reproducing results</summary><p>
 
 ### Benchmark using different evaluation character sets
 ```bash
