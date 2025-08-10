@@ -1,0 +1,46 @@
+# @package _global_
+defaults:
+  - override /model: transocr
+  - override /charset: 94_full
+  - override /dataset: Union
+  
+model:
+  patch_size: [ 4, 4 ]
+  parseq_pretrained: False
+  parseq_checkpoint: /home/gaoz/output/flip/flipae_vit_base_patch16_dec256d4b-20e/checkpoint-10.pth
+  encoder_pretrained: True
+  encoder_checkpoint: /home/gaoz/output/hybrid-mul-base-pretext-4gpus256b/checkpoint-19.pth
+  batch_size: 96
+  lr: 0.0003
+  standard: True
+  enc_embed_dim: 768
+  enc_num_heads: 12
+  enc_mlp_ratio: 4
+  enc_depth: 12
+  dec_embed_dim: 768
+  dec_depth: 6
+  dec_num_heads: 8
+
+data:
+  root_dir: /home/gaoz/datasets/data/
+  num_workers: 8
+  augment: True
+
+trainer:
+  # val_check_interval: 5
+  max_epochs: 10
+  accelerator: gpu
+  devices: 6
+
+
+exp_name: mdr-hybrid-large-union-384-10e-aug
+
+
+hydra:
+  output_subdir: config
+  run:
+    dir: /home/gaoz/outputs/${model.name}/${exp_name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: /home/gaoz/multirun/${model.name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}
+

@@ -1,0 +1,37 @@
+# @package _global_
+defaults:
+  - override /model: transocr
+  - override /charset: 36_lowercase
+  - override /dataset: cvl
+  
+model:
+  patch_size: [ 4, 4 ]
+  parseq_pretrained: False
+  parseq_checkpoint: /home/gaoz/output/flip/flipae_vit_base_patch16_dec256d4b-20e/checkpoint-10.pth
+  encoder_pretrained: True
+  encoder_checkpoint: /home/sist/zuangao/output/hybird-mul-union-4gpu256b/checkpoint-19.pth
+  batch_size: 192
+
+
+data:
+  root_dir: /home/sist/zuangao/datasets/unidata/HandWritten/
+  num_workers: 8
+  augment: True
+
+trainer:
+  val_check_interval: 40
+  accelerator: gpu
+  devices: 2
+
+
+exp_name: transocr-2A100-384-cvl-4x4-aug-preunion
+
+
+hydra:
+  output_subdir: config
+  run:
+    dir: /home/sist/zuangao/outputs/${model.name}/${exp_name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: /home/sist/zuangao/multirun/${model.name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}
+

@@ -1,0 +1,35 @@
+# @package _global_
+defaults:
+  - override /model: parseq
+  - override /charset: 36_lowercase
+  - override /dataset: real
+  
+model:
+  patch_size: [ 4, 4 ]
+  parseq_pretrained: False
+  parseq_checkpoint: /home/gaoz/output/flip/flipae_vit_base_patch16_dec256d4b-20e/checkpoint-10.pth
+  encoder_pretrained: True
+  encoder_checkpoint: /home/sist/zuangao/pretrain_encoder/trans-hybird-mulemb3-prob/checkpoint-19.pth
+  batch_size: 192
+
+data:
+  root_dir: /home/sist/zuangao/datasets/unidata/data/
+  num_workers: 8
+  augment: False
+
+trainer:
+  # max_steps: 4000
+  #limit_train_batches: 0.3  # to match the steps per epoch of `real`
+  #accelerator=gpu trainer.devices=2
+  accelerator: gpu
+  devices: 4
+
+exp_name: parseq-4x192-real-4x4-noaug-pre
+
+hydra:
+  output_subdir: config
+  run:
+    dir: /home/sist/zuangao/outputs/${model.name}/${exp_name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: /home/sist/zuangao/multirun/${model.name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}

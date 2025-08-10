@@ -1,0 +1,40 @@
+# @package _global_
+defaults:
+  - override /model: transocr
+  - override /charset: 36_lowercase
+  - override /dataset: synth
+  
+model:
+  patch_size: [ 4, 4 ]
+  parseq_pretrained: False
+  parseq_checkpoint: /home/gaoz/output/flip/flipae_vit_base_patch16_dec256d4b-20e/checkpoint-10.pth
+  encoder_pretrained: False
+  encoder_checkpoint: /home/sist/zuangao/output/mae-1024b-real-rec/checkpoint-19.pth
+  batch_size: 192
+
+
+data:
+  root_dir: /home/sist/zuangao/datasets/unidata/data/
+  num_workers: 4
+  augment: True
+
+trainer:
+  # val_check_interval: 5
+  max_epochs: 20
+  accelerator: gpu
+  devices: 4
+
+
+exp_name: transocr-4A100-768-synth-4x4-nopre
+
+
+hydra:
+  output_subdir: config
+  run:
+    dir: /home/sist/zuangao/outputs/${model.name}/${exp_name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: /home/sist/zuangao/multirun/${model.name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}
+
+
+

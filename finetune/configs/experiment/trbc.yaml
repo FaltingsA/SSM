@@ -1,0 +1,38 @@
+# @package _global_
+defaults:
+  - override /model: trba
+  - override /charset: 94_full
+  - override /dataset: Union
+
+model:
+  name: trbc
+  _target_: strhub.models.trba.system.TRBC
+  lr: 1e-4
+  ckpt_pretrained: False
+  ckpt_checkpoint: /home/gaoz/output/flip/flipae_vit_base_patch16_dec256d4b-20e/checkpoint-10.pth
+  encoder_pretrained: False
+  encoder_checkpoint: /home/sist/zuangao/pretrain_encoder/trba/checkpoint-19.pth
+  batch_size: 96
+
+data:
+  root_dir: /home/sist/zuangao/datasets/unidata/data/
+  num_workers: 8
+  augment: False
+
+trainer:
+  # val_check_interval: 5
+  max_epochs: 10
+  accelerator: gpu
+  devices: 8
+
+
+exp_name: trbc-8A100-8x96-Union-4x4-noaug-10e-94full-nopre
+
+
+hydra:
+  output_subdir: config
+  run:
+    dir: /home/sist/zuangao/outputs/${model.name}/${exp_name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: /home/sist/zuangao/multirun/${model.name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}

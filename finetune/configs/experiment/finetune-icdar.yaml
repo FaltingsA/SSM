@@ -1,0 +1,40 @@
+# @package _global_
+defaults:
+  - override /model: transocr
+  - override /charset: 94_full
+  - override /dataset: icdar24
+  
+model:
+  patch_size: [ 4, 4 ]
+  parseq_pretrained: True
+  parseq_checkpoint: /home/gaoz/outputs/transocr/finetune-dig-icdar24-384-20e/2024-03-29_12-06-35/checkpoints/epoch=19-step=31609-val_accuracy=93.5918-val_NED=97.9359.ckpt
+  encoder_pretrained: False
+  encoder_checkpoint: /home/gaoz/pretrained/trans-hybird-mulemb3-prob/checkpoint-19.pth
+  batch_size: 192
+  dec_depth: 6
+  lr: 0.000006
+
+
+data:
+  root_dir: /home/gaoz/datasets/
+  num_workers: 8
+  augment: True
+
+trainer:
+  # val_check_interval: 5
+  max_epochs: 20
+  accelerator: gpu
+  devices: 2
+
+
+exp_name: 6e6-finetune-dig-icdar24-384-20e
+
+
+hydra:
+  output_subdir: config
+  run:
+    dir: /home/gaoz/outputs/${model.name}/${exp_name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: /home/gaoz/multirun/${model.name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}
+

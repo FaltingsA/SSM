@@ -1,0 +1,46 @@
+# @package _global_
+defaults:
+  - override /model: transocr
+  - override /charset: 94_full
+  - override /dataset: ard
+  
+model:
+  patch_size: [ 4, 4 ]
+  parseq_pretrained: False
+  parseq_checkpoint: /home/gaoz/output/flip/flipae_vit_base_patch16_dec256d4b-20e/checkpoint-10.pth
+  encoder_pretrained: True
+  encoder_checkpoint: /home/gaoz/output/mdr-pool-base-OCRCC/checkpoint-19.pth
+  batch_size: 192
+  enc_embed_dim: 512
+  enc_num_heads: 8
+  dec_depth: 6
+  dec_embed_dim: 512
+  dec_num_heads: 8
+  lr: 0.0003
+  standard: True
+
+
+data:
+  root_dir: /home/gaoz/datasets/data/
+  num_workers: 8
+  augment: True
+
+trainer:
+  # val_check_interval: 8000
+  max_epochs: 30
+  accelerator: gpu
+  devices: 2
+
+
+exp_name: mdr-pool-base-ard-384-30e-aug
+
+
+
+hydra:
+  output_subdir: config
+  run:
+    dir: /home/gaoz/outputs/${model.name}/${exp_name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: /home/gaoz/multirun/${model.name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}
+

@@ -1,0 +1,5 @@
+# @package _global_
+data:
+  train_dir: icdar24
+
+# CUDA_VISIBLE_DEVICES=4,6 ./train.py +experiment=finetune-icdar-mdr

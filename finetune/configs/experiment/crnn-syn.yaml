@@ -1,0 +1,35 @@
+# @package _global_
+defaults:
+  - override /model: crnn
+  - override /charset: 36_lowercase
+  - override /dataset: synth
+  
+model:
+  ckpt_pretrained: False
+  ckpt_checkpoint: /home/gaoz/output/flip/flipae_vit_base_patch16_dec256d4b-20e/checkpoint-10.pth
+  encoder_pretrained: False
+  encoder_checkpoint: /home/sist/zuangao/output/crnn-debug/checkpoint-19.pth
+  batch_size: 384
+
+
+data:
+  root_dir: /home/sist/zuangao/datasets/unidata/data/
+  num_workers: 8
+  augment: True
+
+trainer:
+  accelerator: gpu
+  devices: 2
+
+
+exp_name: crnn-2A100-768-synth-aug-nopre
+
+
+hydra:
+  output_subdir: config
+  run:
+    dir: /home/sist/zuangao/outputs/${model.name}/${exp_name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: /home/sist/zuangao/multirun/${model.name}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}
+
